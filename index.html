@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priyadarshini Angadi — Applied Economist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2C3F;
+    --navy-deep:#0A2030;
+    --cream:#EEE7D8;
+    --paper:#F6F1E6;
+    --teal:#3E7C82;
+    --teal-soft:#6E9C97;
+    --brass:#B98B3E;
+    --ink:#1C1B18;
+    --line: rgba(110,156,151,0.35);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; letter-spacing:-0.01em;}
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  a{ color:inherit; }
+
+  /* ---------- contour pattern (signature element) ---------- */
+  .contours{
+    position:absolute; inset:0; width:100%; height:100%;
+    pointer-events:none;
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px 6vw;
+    background:rgba(246,241,230,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .brand{ font-family:'Fraunces', serif; font-size:1.05rem; font-weight:600;}
+  nav .brand span{ color:var(--teal); }
+  nav ul{ list-style:none; display:flex; gap:28px; }
+  nav a{ text-decoration:none; font-size:0.82rem; letter-spacing:0.04em; text-transform:uppercase; font-family:'IBM Plex Mono', monospace; color:var(--navy); opacity:0.75; transition:opacity .2s;}
+  nav a:hover{ opacity:1; }
+  @media (max-width:720px){ nav ul{ display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color:var(--cream);
+    padding: 120px 6vw 90px;
+    overflow:hidden;
+  }
+  .hero-inner{ position:relative; z-index:2; max-width:920px; }
+  .hero .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .hero .eyebrow::before{
+    content:''; width:26px; height:1px; background:var(--brass); display:inline-block;
+  }
+  .hero h1{
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height:1.02;
+    max-width:14ch;
+  }
+  .hero .role{
+    margin-top:22px;
+    font-size:1.15rem;
+    color:var(--teal-soft);
+    max-width:46ch;
+    font-weight:400;
+  }
+  .hero .lede{
+    margin-top:26px;
+    max-width:56ch;
+    color:rgba(238,231,216,0.82);
+    font-size:1rem;
+  }
+  .depth-scale{
+    position:absolute; right:6vw; top:120px; bottom:60px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:rgba(238,231,216,0.35);
+    z-index:2;
+  }
+  .depth-scale div{ display:flex; align-items:center; gap:8px; }
+  .depth-scale div::after{ content:''; width:34px; height:1px; background:rgba(238,231,216,0.25); }
+  @media (max-width:900px){ .depth-scale{ display:none; } }
+
+  /* ---------- section shell ---------- */
+  section{ padding: 84px 6vw; position:relative; }
+  .section-head{ margin-bottom:48px; max-width:640px; }
+  .section-head .num{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--teal); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; display:block;
+  }
+  .section-head h2{ font-size:clamp(1.7rem, 3vw, 2.3rem); color:var(--navy); }
+  .divider{
+    height:44px; width:100%;
+  }
+
+  /* ---------- about ---------- */
+  .about{ background:var(--paper); }
+  .about-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap:64px; align-items:start; }
+  .about p{ margin-bottom:16px; max-width:60ch; color:#2b2a26; }
+  .about-figures{ display:flex; flex-direction:column; gap:26px; }
+  .figure{ border-left:2px solid var(--brass); padding-left:18px; }
+  .figure .num{ font-family:'Fraunces', serif; font-size:1.9rem; color:var(--navy); }
+  .figure .label{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--teal); margin-top:2px; }
+  @media (max-width:820px){ .about-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- expertise ---------- */
+  .expertise{ background:var(--cream); }
+  .exp-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .exp-card{ background:var(--cream); padding:28px 24px; }
+  .exp-card h3{ font-size:1.05rem; color:var(--navy); margin-bottom:8px; }
+  .exp-card p{ font-size:0.88rem; color:#3a382f; }
+
+  /* ---------- research (log entries) ---------- */
+  .research{ background:var(--paper); }
+  .log{ display:flex; flex-direction:column; }
+  .log-entry{
+    display:grid; grid-template-columns: 160px 1fr; gap:32px;
+    padding: 32px 0; border-top:1px solid var(--line);
+  }
+  .log-entry:last-child{ border-bottom:1px solid var(--line); }
+  .log-meta{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--teal); }
+  .log-meta .site{ display:block; color:var(--brass); font-weight:500; margin-bottom:6px; }
+  .log-entry h3{ font-size:1.25rem; color:var(--navy); margin-bottom:10px; }
+  .log-entry p{ color:#2b2a26; max-width:70ch; font-size:0.95rem; }
+  .tags{ margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{ font-family:'IBM Plex Mono', monospace; font-size:0.7rem; padding:4px 10px; border:1px solid var(--teal-soft); border-radius:2px; color:var(--teal); }
+  @media (max-width:700px){ .log-entry{ grid-template-columns:1fr; gap:8px; } }
+
+  /* ---------- experience timeline ---------- */
+  .experience{ background:var(--navy); color:var(--cream); }
+  .experience .section-head h2{ color:var(--cream); }
+  .experience .section-head .num{ color:var(--brass); }
+  .timeline{ border-left:1px solid rgba(238,231,216,0.25); padding-left:36px; display:flex; flex-direction:column; gap:40px; }
+  .t-item{ position:relative; }
+  .t-item::before{
+    content:''; position:absolute; left:-42px; top:6px; width:9px; height:9px; border-radius:50%; background:var(--brass);
+  }
+  .t-item .when{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--teal-soft); margin-bottom:6px; }
+  .t-item h3{ font-size:1.15rem; margin-bottom:6px; }
+  .t-item p{ color:rgba(238,231,216,0.75); max-width:64ch; font-size:0.92rem; }
+
+  /* ---------- education ---------- */
+  .education{ background:var(--cream); }
+  .edu-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; }
+  .edu-card{ background:var(--paper); border:1px solid var(--line); padding:26px; }
+  .edu-card .school{ font-family:'IBM Plex Mono', monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--teal); margin-bottom:8px; }
+  .edu-card h3{ font-size:1.1rem; color:var(--navy); margin-bottom:6px; }
+  .edu-card p{ font-size:0.88rem; color:#3a382f; }
+
+  /* ---------- contact ---------- */
+  .contact{ background:var(--navy-deep); color:var(--cream); text-align:center; }
+  .contact h2{ color:var(--cream); font-size:clamp(1.8rem,4vw,2.6rem); max-width:16ch; margin:0 auto 20px; }
+  .contact p{ color:rgba(238,231,216,0.7); max-width:52ch; margin:0 auto 36px; }
+  .contact-links{ display:flex; justify-content:center; gap:18px; flex-wrap:wrap; }
+  .contact-links a{
+    font-family:'IBM Plex Mono', monospace; font-size:0.85rem;
+    border:1px solid var(--teal-soft); padding:12px 22px; text-decoration:none; color:var(--cream);
+    transition: background .2s, color .2s;
+  }
+  .contact-links a:hover{ background:var(--teal-soft); color:var(--navy-deep); }
+  footer{ text-align:center; padding:26px; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:rgba(238,231,216,0.4); background:var(--navy-deep); }
+
+  .reveal{ opacity:0; transform:translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">P. ANGADI <span>·</span> Economist</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <svg class="contours" preserveAspectRatio="none" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#6E9C97" stroke-width="1">
+      <path opacity="0.18" d="M -50 120 C 200 60, 400 180, 650 110 S 1100 40, 1300 120"/>
+      <path opacity="0.22" d="M -50 220 C 220 150, 420 260, 660 200 S 1080 130, 1300 210"/>
+      <path opacity="0.28" d="M -50 320 C 230 260, 430 350, 660 300 S 1090 240, 1300 310"/>
+      <path opacity="0.22" d="M -50 420 C 240 360, 440 440, 670 400 S 1100 350, 1300 410"/>
+      <path opacity="0.16" d="M -50 520 C 230 470, 450 540, 680 500 S 1100 460, 1300 510"/>
+      <path opacity="0.12" d="M -50 610 C 240 570, 460 630, 690 590 S 1100 560, 1300 600"/>
+    </g>
+  </svg>
+  <div class="hero-inner">
+    <div class="eyebrow">Applied Economist &nbsp;·&nbsp; Marine &amp; Environmental Economics</div>
+    <h1>Priyadarshini Angadi</h1>
+    <p class="role">Economic Consultant, NOAA Office of National Marine Sanctuaries</p>
+    <p class="lede">I work at the intersection of benefit-cost analysis, regional economic modeling, and marine policy — bringing an engineer's precision to questions about how coastal and ocean resources create value.</p>
+  </div>
+  <div class="depth-scale">
+    <div>0 m</div>
+    <div>50 m</div>
+    <div>100 m</div>
+    <div>150 m</div>
+    <div>200 m</div>
+  </div>
+</header>
+
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <span class="num mono">01 / About</span>
+      <h2 style="margin-bottom:22px;">From circuits to economies</h2>
+      <p>My path into economics began after roughly eight years working in electronics and communications engineering. That background shapes how I approach economic problems now: I look for the underlying mechanism, build models that can be tested and reproduced, and I'm comfortable moving between quantitative rigor and plain-language explanation.</p>
+      <p>I hold an M.S. in Economics from Purdue University, with additional economics training from the London School of Economics. Today I work as an Economic Consultant with NOAA's Office of National Marine Sanctuaries, where I apply benefit-cost analysis, IMPLAN regional impact modeling, NEPA analysis, and fisheries economics to questions about how marine sanctuaries generate economic and social value.</p>
+      <p>Alongside applied consulting work, I'm active in economics education and quantitative research methodology — including using LLM-assisted classification with formal validation (Cohen's kappa, versioned taxonomies) to make large-scale literature analysis reproducible.</p>
+    </div>
+    <div class="about-figures reveal">
+      <div class="figure">
+        <div class="num">8+ yrs</div>
+        <div class="label">Engineering background, pre-economics</div>
+      </div>
+      <div class="figure">
+        <div class="num">5</div>
+        <div class="label">National marine sanctuaries covered in research</div>
+      </div>
+      <div class="figure">
+        <div class="num">~400</div>
+        <div class="label">Papers (1973–2025) in current bibliometric project</div>
+      </div>
+      <div class="figure">
+        <div class="num">3,925</div>
+        <div class="label">Survey respondents analyzed, multi-sanctuary visitor study</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="expertise" id="expertise">
+  <div class="section-head reveal">
+    <span class="num mono">02 / Expertise</span>
+    <h2>Core areas of practice</h2>
+  </div>
+  <div class="exp-grid reveal">
+    <div class="exp-card">
+      <h3>Benefit-Cost Analysis</h3>
+      <p>Structuring and quantifying costs and benefits for federal and regional policy decisions.</p>
+    </div>
+    <div class="exp-card">
+      <h3>IMPLAN Regional Modeling</h3>
+      <p>Input-output modeling and Leontief inverse methodology for regional economic impact studies.</p>
+    </div>
+    <div class="exp-card">
+      <h3>NEPA Analysis</h3>
+      <p>Environmental review and economic impact analysis supporting NEPA compliance.</p>
+    </div>
+    <div class="exp-card">
+      <h3>Fisheries Economics</h3>
+      <p>Gear-species pattern analysis and trend detection (Mann-Kendall) across sanctuary fisheries.</p>
+    </div>
+    <div class="exp-card">
+      <h3>Marine &amp; Environmental Economics</h3>
+      <p>Valuing coastal and ocean resources, from visitor use to ecosystem-linked economic activity.</p>
+    </div>
+    <div class="exp-card">
+      <h3>LLM-Assisted Research Methods</h3>
+      <p>Reproducible, validated classification pipelines for large-scale literature and text analysis.</p>
+    </div>
+  </div>
+</section>
+
+<section class="research" id="research">
+  <div class="section-head reveal">
+    <span class="num mono">03 / Research</span>
+    <h2>Selected research &amp; consulting projects</h2>
+  </div>
+  <div class="log reveal">
+
+    <div class="log-entry">
+      <div class="log-meta"><span class="site">FGBNMS</span>1973 – 2025</div>
+      <div>
+        <h3>Bibliometric Analysis of Flower Garden Banks Research</h3>
+        <p>Classifying how research technologies have evolved across roughly 400 papers spanning five decades. Built a nine-category technology taxonomy and applied zero-shot NLI classification (Hugging Face BART-large-MNLI) with a reproducible methodology — pinned model versions, temperature=0, majority-vote passes, and Cohen's kappa validation — aimed at a publishable methods section.</p>
+        <div class="tags">
+          <span class="tag">LLM classification</span>
+          <span class="tag">Taxonomy design</span>
+          <span class="tag">Reproducibility</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-meta"><span class="site">California Fisheries</span>Multi-year</div>
+      <div>
+        <h3>California Fisheries Profile Analysis</h3>
+        <p>Trend detection using Mann-Kendall analysis paired with IMPLAN economic impact modeling, examining gear-species patterns across five national marine sanctuaries to characterize fishery economic activity over time.</p>
+        <div class="tags">
+          <span class="tag">Mann-Kendall</span>
+          <span class="tag">IMPLAN</span>
+          <span class="tag">Fisheries economics</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-meta"><span class="site">Olympic Coast NMS</span>Consulting</div>
+      <div>
+        <h3>Marine Museum Economic Impact Analysis</h3>
+        <p>IMPLAN-based regional economic impact analysis for a proposed marine museum, including sector mapping and Leontief inverse methodology to estimate downstream economic effects.</p>
+        <div class="tags">
+          <span class="tag">IMPLAN</span>
+          <span class="tag">Regional impact</span>
+          <span class="tag">Leontief inverse</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-meta"><span class="site">Great Lakes NMS</span>Survey study</div>
+      <div>
+        <h3>Multi-Sanctuary Visitor Use Study</h3>
+        <p>Analysis of survey data from 3,925 respondents across four sanctuaries, producing sanctuary-stratified frequency and pivot tables to characterize visitor behavior and use patterns.</p>
+        <div class="tags">
+          <span class="tag">Survey analysis</span>
+          <span class="tag">Python / Colab</span>
+          <span class="tag">Visitor use</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-meta"><span class="site">FGBNMS</span>Condition report</div>
+      <div>
+        <h3>Sanctuary Condition Report Contributions</h3>
+        <p>Contributed economic and research-methodology components to the Flower Garden Banks condition report process, connecting long-term monitoring data to socioeconomic context.</p>
+        <div class="tags">
+          <span class="tag">Condition reporting</span>
+          <span class="tag">Monitoring &amp; evaluation</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="experience" id="experience">
+  <div class="section-head reveal">
+    <span class="num mono">04 / Experience</span>
+    <h2>Professional path</h2>
+  </div>
+  <div class="timeline reveal">
+    <div class="t-item">
+      <div class="when">Current</div>
+      <h3>Economic Consultant (Contract) — NOAA Office of National Marine Sanctuaries</h3>
+      <p>Applied economics support across benefit-cost analysis, regional economic modeling, NEPA analysis, and fisheries economics for the national marine sanctuary system.</p>
+    </div>
+    <div class="t-item">
+      <div class="when">Earlier</div>
+      <h3>Applied Economic Research — Marine &amp; Conservation Program Evaluation</h3>
+      <p>Monitoring and evaluation methodology for conservation and livelihoods programs, alongside sanctuary-level research and analysis.</p>
+    </div>
+    <div class="t-item">
+      <div class="when">Prior career</div>
+      <h3>Electronics &amp; Communications Engineering</h3>
+      <p>Roughly eight years in engineering roles before transitioning into applied economics — grounding a technical, systems-based approach to economic modeling.</p>
+    </div>
+  </div>
+</section>
+
+<section class="education" id="education">
+  <div class="section-head reveal">
+    <span class="num mono">05 / Education</span>
+    <h2>Academic background</h2>
+  </div>
+  <div class="edu-grid reveal">
+    <div class="edu-card">
+      <div class="school mono">Purdue University</div>
+      <h3>M.S., Economics</h3>
+      <p>Graduate training in applied and quantitative economics.</p>
+    </div>
+    <div class="edu-card">
+      <div class="school mono">London School of Economics</div>
+      <h3>Economics Training</h3>
+      <p>Additional coursework in economics, complementing graduate study.</p>
+    </div>
+    <div class="edu-card">
+      <div class="school mono">Engineering Background</div>
+      <h3>Electronics &amp; Communication Engineering</h3>
+      <p>Foundational technical training preceding the transition into economics.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2 class="reveal">Open to federal economist roles, consulting engagements, and economics teaching positions.</h2>
+  <p class="reveal">I'd welcome a conversation about applied economics, marine and environmental policy, or research collaboration.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:your.email@example.com">your.email@example.com</a>
+    <a href="#">LinkedIn — add your URL</a>
+    <a href="#">CV — link a PDF</a>
+  </div>
+</section>
+
+<footer>Priyadarshini Angadi — Applied Economist · Site built July 2026</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
